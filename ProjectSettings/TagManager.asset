@@ -41,3 +41,18 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Floor
+    uniqueID: 1017429893
+    locked: 0
+  - name: Customers
+    uniqueID: 1096960361
+    locked: 0
+  - name: BackTable
+    uniqueID: 3330509055
+    locked: 0
+  - name: Players
+    uniqueID: 16334595
+    locked: 0
+  - name: FrontTable
+    uniqueID: 3785471491
+    locked: 0
