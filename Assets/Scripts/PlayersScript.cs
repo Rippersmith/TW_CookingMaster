@@ -4,7 +4,7 @@ using UnityEngine;
 
 //rather than putting both player controls in one script, I decided that
 //giving each player their own script would make things a little easier
-public class PlayerScript : MonoBehaviour
+public class PlayersScript : MonoBehaviour
 {
     //I assigned the appropriate keys in the editor for each action
     //Player 1: horizAxes: A, D  vertAxes: W, S  interact: Q  chop: E
