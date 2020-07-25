@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc3800c2bcd243a4993e4f41259b9c00, type: 3}
   m_Name: Lettuce
   m_EditorClassIdentifier: 
-  icon: {fileID: 0}
-  veggie: 
+  icon: {fileID: 21300000, guid: 4cc584b869c524d40a775c094b545fa2, type: 3}
+  veggieName: Lettuce

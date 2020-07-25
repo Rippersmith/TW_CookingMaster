@@ -11,6 +11,7 @@ public class PlayersScript : MonoBehaviour
     //Player 2: horizAxes: J, L  vertAxes: I, K  interact: U  chop: O
     public string horizAxes, vertAxes, interact, chop;
     public float movementSpeed = 0f;
+    public int playerNum;
 
     //later on, this sensor will be used to sense whether the player is standing in
     //front of something important (vegetables, customer, trash)
@@ -57,6 +58,7 @@ public class PlayersScript : MonoBehaviour
         //Input for Chop
         if (Input.GetButtonDown(chop))
         {
+            PutVegetableOnChoppingBoard();
             //TODO: implement chop script
         }
     }
@@ -69,9 +71,17 @@ public class PlayersScript : MonoBehaviour
 
     }
 
+    //function to "pick up" a veggie from a vegetable pile
     void GetNewVegetable(VegetablesScriptObj newVeggie)
     {
-        print(newVeggie.veggieName);
+        gameManager.AddVeggieToQueue(playerNum, newVeggie);
+    }
+
+    //function to put a veggie on the chopping board, currently only checks to
+    //make sure a veggie can be dequeued
+    void PutVegetableOnChoppingBoard()
+    {
+        gameManager.TakeVeggieFromQueue(playerNum);
     }
 
 }

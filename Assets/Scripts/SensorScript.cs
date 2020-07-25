@@ -24,6 +24,8 @@ public class SensorScript : MonoBehaviour
             chopBool = true;
     }
 
+    //this is to make sure that the player doesn't have anything to take/do
+    //once he moves out of range of the object
     private void OnTriggerExit2D(Collider2D collider)
     {
         if (collider.CompareTag("VeggiePiles"))

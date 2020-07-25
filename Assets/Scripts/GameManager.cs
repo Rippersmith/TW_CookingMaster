@@ -7,13 +7,9 @@ public class GameManager : MonoBehaviour
 {
     GameManager instance;
 
-    public int score1, score2;
-
-    public Queue<VegetablesScriptObj>   player1Veggies = new Queue<VegetablesScriptObj>(),
-                                        player2Veggies = new Queue<VegetablesScriptObj>();
-
-    Image   player1Veggie1, player1Veggie2,
-            player2Veggie1, player2Veggie2;
+    //this method seems a bit clunky, but it is functional. Each PlayerInfo
+    //stores the special things for each player - score, time, items, etc.
+    public PlayerInfo[] player = new PlayerInfo[2];
 
     //scripts will call this function to call GameManager as a reference
     public GameManager GetGameManager()
@@ -30,9 +26,31 @@ public class GameManager : MonoBehaviour
         else Destroy(gameObject);
     }
 
-    private void Update()
-    {
+    //private void Update()
+    //{
 
+    //}
+
+        //add a new veggie to the player's queue
+    public void AddVeggieToQueue(int playerNum, VegetablesScriptObj veggie)
+    {
+        if (player[playerNum].veggieQueue.Count < 2)
+        {
+            player[playerNum].veggieQueue.Enqueue(veggie);
+            player[playerNum].UpdateQueue();
+        }
+    }
+
+    //take a veggie out from the player's queue and put it somewhere,
+    //either customer, trash, or chopping board
+    public void TakeVeggieFromQueue(int playerNum)
+    {
+        if (player[playerNum].veggieQueue.Count > 0)
+        {
+            player[playerNum].veggieQueue.Dequeue();
+            player[playerNum].UpdateQueue();
+            //TODO: send Dequeue somewhere
+        }
     }
 
     void VegetableQueueUpdated(Queue<VegetablesScriptObj> veggieQueue)
