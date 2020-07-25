@@ -12,5 +12,5 @@ public class VegetablesScriptObj : ScriptableObject
 {
     //TODO: add more variables as needed
     public Sprite icon;
-    public string veggie;
+    public string veggieName;
 }

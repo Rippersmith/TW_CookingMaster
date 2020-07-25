@@ -15,13 +15,18 @@ public class PlayersScript : MonoBehaviour
     //later on, this sensor will be used to sense whether the player is standing in
     //front of something important (vegetables, customer, trash)
     public GameObject sensor;
+    SensorScript sensorInfo;
+
+    GameManager gameManager;
 
     Vector2 movement = new Vector2(0, 0);
     Rigidbody2D rb;
 
     void Start()
     {
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>().GetGameManager();
         rb = GetComponent<Rigidbody2D>();
+        sensorInfo = sensor.GetComponent<SensorScript>();
     }
 
     void Update()
@@ -40,9 +45,13 @@ public class PlayersScript : MonoBehaviour
         }
 
         //Input for Interact
-        if (Input.GetButtonDown(interact))
+        if (Input.GetButtonDown(interact) && sensorInfo.interactBool == true)
         {
-            //TODO: implement interact script
+            if (sensorInfo.interactableObject.GetComponent<VegetablePiles>() != null)
+            {
+                GetNewVegetable(sensorInfo.interactableObject.GetComponent<VegetablePiles>().veggie);
+            }
+            //Interact();
         }
 
         //Input for Chop
@@ -59,4 +68,10 @@ public class PlayersScript : MonoBehaviour
         rb.MovePosition(rb.position + (movement * movementSpeed * Time.fixedDeltaTime));
 
     }
+
+    void GetNewVegetable(VegetablesScriptObj newVeggie)
+    {
+        print(newVeggie.veggieName);
+    }
+
 }
