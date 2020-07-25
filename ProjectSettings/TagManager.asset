@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - VeggiePiles
+  - ChoppingBoard
+  - TrashCan
   layers:
   - Default
   - TransparentFX

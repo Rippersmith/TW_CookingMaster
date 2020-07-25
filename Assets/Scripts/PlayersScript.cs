@@ -63,6 +63,8 @@ public class PlayersScript : MonoBehaviour
         }
 
         //Input for Interact
+        //depending on the "interactableObject" stored in the sensor - specifically,
+        //the interactableObject's tag - 
         if (Input.GetButtonDown(interact) && sensorInfo.interactBool == true && timeLeft)
         {
             print(sensorInfo.interactableObject.tag);
@@ -73,7 +75,10 @@ public class PlayersScript : MonoBehaviour
             else if (sensorInfo.interactableObject.tag == "TrashCan" && playerInfo.veggieQueue.Count > 0)
             {
                 ThrowOutItem();
-                //GetNewVegetable(sensorInfo.interactableObject.GetComponent<VegetablePiles>().veggie);
+            }
+            else if (sensorInfo.interactableObject.tag == "Customer" && playerInfo.veggieQueue.Count > 0)
+            {
+                //TODO: implement Customer interactions
             }
             //Interact();
         }
@@ -81,7 +86,11 @@ public class PlayersScript : MonoBehaviour
         //Input for Chop
         if (Input.GetButtonDown(chop) && timeLeft)
         {
-            PutVegetableOnChoppingBoard();
+            if (sensorInfo.interactableObject.tag == "ChoppingBoard" && playerInfo.veggieQueue.Count > 0)
+            {
+                ThrowOutItem();
+            }
+            //PutVegetableOnChoppingBoard();
             //TODO: implement chop script
         }
     }
@@ -89,7 +98,8 @@ public class PlayersScript : MonoBehaviour
     void FixedUpdate()
     {
         //Player movement
-        //TODO: Try and make player movement a little smoother; try and use something with Lerp
+        //TODO: Try and make player movement a little smoother; try and use something with Lerp & velocity
+        //as of now, the player will just move through solid objects
         rb.MovePosition(rb.position + (movement * movementSpeed * Time.fixedDeltaTime));
 
     }
@@ -123,6 +133,7 @@ public class PlayersScript : MonoBehaviour
     //make sure a veggie can be dequeued
     void PutVegetableOnChoppingBoard()
     {
+
         //gameManager.TakeVeggieFromQueue(playerNum);
     }
 
