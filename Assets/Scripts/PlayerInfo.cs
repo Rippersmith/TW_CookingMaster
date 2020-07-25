@@ -9,17 +9,29 @@ using UnityEngine.UI;
 public class PlayerInfo : MonoBehaviour
 {
     int maxHeldItems = 2;
-    public int score;
     public float time;
+    public int score;
     public Queue<VegetablesScriptObj> veggieQueue = new Queue<VegetablesScriptObj>();
 
     //obvoiously, this will be a problem since maxHeldItems could change at any time,
     //but for now, as long as there's only 2 player, I'll keep it set like this
     public Image[] veggieImages = new Image[2];
 
+    public Text timeText, scoreText;
+
     private void Update()
     {
-        time -= Time.deltaTime;
+        if (time > 0)
+        {
+            time -= Time.deltaTime;
+            timeText.text = time.ToString("F1");
+        }
+        else
+        {
+            timeText.text = "STOP";
+        }
+
+        scoreText.text = score.ToString();
     }
 
     public void UpdateQueue()

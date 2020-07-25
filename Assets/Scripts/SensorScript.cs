@@ -15,7 +15,7 @@ public class SensorScript : MonoBehaviour
         //few if statements
     private void OnTriggerStay2D(Collider2D collider)
     {
-        if (collider.CompareTag("VeggiePiles"))
+        if (collider.CompareTag("VeggiePiles") || collider.CompareTag("TrashCan"))
         {
             interactBool = true;
             interactableObject = collider.gameObject;
