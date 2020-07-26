@@ -9,8 +9,9 @@ using UnityEngine;
 public class ChoppingBoard : MonoBehaviour
 {
     public Transform newPlayerPos;
-    public SaladScriptObj newCombo;
+    public SaladScriptObj saladToSpawn, newCombo;
     public bool isSaladHere = false;
+    public SpriteRenderer saladPic;
 
     float timer = 5f;
 
@@ -19,26 +20,32 @@ public class ChoppingBoard : MonoBehaviour
         timer -= Time.deltaTime;
     }
 
+    //take the VegetableScriptObj, make a new newCombo salad (if there isn't one there),
+    //then read the VegetableScriptObj & "add" it to the newCombo. Also make the salad
+    //picture visible on the cutting board
     public void StartChopping(string addToCombo)
     {
         isSaladHere = true;
+        if (newCombo == null)
+            newCombo = saladToSpawn;
         for (int i = 0; i < newCombo.veggiesIncluded.Length; i++)
         {
             if (newCombo.veggiesIncluded[i].VeggieName == addToCombo)
                 newCombo.veggiesIncluded[i].IsVeggieIncluded = true;
         }
+        saladPic.color = Color.white;
     }
 
+    //script so that the player can take the salad from the PlayerScript script
     public SaladScriptObj TakeSalad()
     {
-        //rather than removing the salad, we're just going to copy it and then reset it to a default state
+        //create a temporary duplicate salad, clear off the chopping board,
+        //then return the duplicate salad
         SaladScriptObj newSalad = newCombo;
         isSaladHere = false;
+        newCombo = null;
+        saladPic.color = Color.clear;
 
-        for (int i = 0; i < newCombo.veggiesIncluded.Length; i++)
-        {
-                newCombo.veggiesIncluded[i].IsVeggieIncluded = false;
-        }
         return newSalad;
     }
 }

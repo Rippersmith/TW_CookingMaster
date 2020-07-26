@@ -5,7 +5,6 @@ using UnityEngine;
 public class SensorScript : MonoBehaviour
 {
     public bool interactBool = false;
-    public bool chopBool = false;
 
     public GameObject interactableObject;
     //ChoppingBoard choppingBoard;
@@ -20,21 +19,17 @@ public class SensorScript : MonoBehaviour
             interactBool = true;
             interactableObject = collider.gameObject;
         }
-        else if (collider.CompareTag("ChoppingBoard"))
-            chopBool = true;
     }
 
     //this is to make sure that the player doesn't have anything to take/do
     //once he moves out of range of the object
     private void OnTriggerExit2D(Collider2D collider)
     {
-        if (collider.CompareTag("VeggiePiles") || collider.CompareTag("TrashCan"))
+        if (collider.CompareTag("VeggiePiles") || collider.CompareTag("TrashCan") || collider.CompareTag("ChoppingBoard"))
         {
             interactBool = false;
             interactableObject = null;
         }
-        else if (collider.CompareTag("ChoppingBoard"))
-            chopBool = false;
     }
 
 }

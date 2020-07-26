@@ -75,7 +75,7 @@ public class PlayersScript : MonoBehaviour
             {
                 ThrowOutItem();
             }
-            if (sensorInfo.interactableObject.tag == "ChoppingBoard" && sensorInfo.interactableObject.GetComponent<ChoppingBoard>().isSaladHere == true && playerInfo.veggieQueue.Count > 0)
+            if (sensorInfo.interactableObject.tag == "ChoppingBoard" && sensorInfo.interactableObject.GetComponent<ChoppingBoard>().isSaladHere == true && playerInfo.veggieQueue.Count < 2)
             {
                 PickUpNewSalad(sensorInfo.interactableObject.GetComponent<ChoppingBoard>());
             }
@@ -112,14 +112,14 @@ public class PlayersScript : MonoBehaviour
     {
         if (playerInfo.veggieQueue.Count < 2)
         {
-            playerInfo.veggieQueue.Enqueue(newVeggie);
+            playerInfo.veggieQueue.Enqueue(NewSaladFromVeggie(newVeggie));
             playerInfo.UpdateQueue();
         }
     }
 
-    //take a veggie out from the player's queue and put it somewhere,
-    //either customer, trash, or chopping board
-    VegetablesScriptObj TakeVeggieFromQueue()
+    //take a veggie out from the player's queue and put it somewhere, & update the queue
+    //Ambiguous so that it can be used in almost any situation that will be available
+    VegetablesScriptObj TakeItemFromQueue()
     {
         if (playerInfo.veggieQueue.Count > 0)
         {
@@ -127,7 +127,6 @@ public class PlayersScript : MonoBehaviour
             playerInfo.UpdateQueue();
 
             return tempItem;
-            //TODO: send Dequeue somewhere
         }
         return null;
     }
@@ -137,22 +136,28 @@ public class PlayersScript : MonoBehaviour
     void PutVegetableOnChoppingBoard(ChoppingBoard board)
     {
         transform.position = board.newPlayerPos.position;
-        //if (board.newCombo == null)
-        //    board.newCombo = (SaladScriptObj)TakeVeggieFromQueue();
-        //else
-            board.StartChopping("Chopped " + TakeVeggieFromQueue().veggieName);
-
+        board.StartChopping("Chopped " + TakeItemFromQueue().veggieName);
     }
 
+    //Pick up a new SaladScriptObj from the cutting board and add it to the PlayerInfo veggieQueue
     void PickUpNewSalad(ChoppingBoard board)
     {
         playerInfo.veggieQueue.Enqueue(board.TakeSalad());
-        //print(playerInfo.veggieQueue.veggiesIncluded)
+        playerInfo.UpdateQueue();
+
+        //Debugging to check the values of the SaladScriptObj just picked up
+        //SaladScriptObj veg = playerInfo.veggieQueue.Peek();
+        //for (int i = 0; i < 6; i++)
+        //{
+        //    print(veg.veggiesIncluded[i].VeggieName + " : " + veg.veggiesIncluded[i].IsVeggieIncluded);
+        //}
     }
 
+    //function to use when player throws out a veggie or salad into the trash can
+    //It dequeues the first veggie, then decreases the score
     void ThrowOutItem()
     {
-        TakeVeggieFromQueue();
+        TakeItemFromQueue();
         
         //decrease score here. There's also a failsafe so that the score doesn't go below 0
         playerInfo.score -= 50;
@@ -160,4 +165,13 @@ public class PlayersScript : MonoBehaviour
             playerInfo.score = 0;
     }
 
+    //this is a conversion function to transfer the values in VegetablesScriptObj
+    //into a new, instantiated SaladScriptObj
+    SaladScriptObj NewSaladFromVeggie(VegetablesScriptObj veggie)
+    {
+        SaladScriptObj newSalad = ScriptableObject.CreateInstance<SaladScriptObj>();
+        newSalad.icon = veggie.icon;
+        newSalad.veggieName = veggie.veggieName;
+        return newSalad;
+    }
 }

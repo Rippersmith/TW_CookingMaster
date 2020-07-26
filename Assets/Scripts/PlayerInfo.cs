@@ -11,7 +11,7 @@ public class PlayerInfo : MonoBehaviour
     int maxHeldItems = 2;
     public float time;
     public int score;
-    public Queue<VegetablesScriptObj> veggieQueue = new Queue<VegetablesScriptObj>();
+    public Queue<SaladScriptObj> veggieQueue = new Queue<SaladScriptObj>();
 
     //obvoiously, this will be a problem since maxHeldItems could change at any time,
     //but for now, as long as there's only 2 player, I'll keep it set like this
@@ -21,6 +21,7 @@ public class PlayerInfo : MonoBehaviour
 
     private void Update()
     {
+        //This is the timer being decreased & its display to the UI
         if (time > 0)
         {
             time -= Time.deltaTime;
@@ -36,13 +37,15 @@ public class PlayerInfo : MonoBehaviour
 
     public void UpdateQueue()
     {
+        //if (veggieQueue.Peek() != null)
+           
         for (int i = 0; i < maxHeldItems; i++){
             //show the image of the veggie if there is one (or two)
             //Note: this enqueue-dequeue way is meant to read the veggie,
             //then return it back to the queue
             if (i < veggieQueue.Count)
             {
-                VegetablesScriptObj tempVeg = veggieQueue.Dequeue();
+                SaladScriptObj tempVeg = veggieQueue.Dequeue();
                 veggieImages[i].color = Color.white;
                 veggieImages[i].sprite = tempVeg.icon;
                 veggieQueue.Enqueue(tempVeg);

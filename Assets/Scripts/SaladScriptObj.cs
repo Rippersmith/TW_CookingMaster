@@ -10,7 +10,7 @@ using UnityEngine;
     //I want to make a Dictionary where I can assign variables without Start()/Awake(),
     //(no MonoBehaviour available) but Dictionary doesn't allow that. Instead, I made
     //my own customized Dictionary (shortened to CustomDict) that can be assigned automatically
-    [System.Serializable]
+//[System.Serializable]
 public struct CustomDict
 {
     private string veggieName;
@@ -19,10 +19,10 @@ public struct CustomDict
     public string VeggieName { get { return veggieName; } set { veggieName = value; } }
     public bool IsVeggieIncluded { get { return isVeggieIncluded; } set { isVeggieIncluded = value; } }
 
-    public CustomDict(string _veggieName, bool _isVeggieIncluded)
+    public CustomDict(string newVeggieName, bool newIsVeggieIncluded)
     {
-        veggieName = _veggieName;
-        isVeggieIncluded = _isVeggieIncluded;
+        veggieName = newVeggieName;
+        isVeggieIncluded = newIsVeggieIncluded;
     }
 
     public void AddVeggieToSalad()
@@ -32,6 +32,7 @@ public struct CustomDict
     }
 
 }
+
 [CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/Salads", order = 2)]
 public class SaladScriptObj: VegetablesScriptObj
 {
@@ -39,12 +40,14 @@ public class SaladScriptObj: VegetablesScriptObj
     //of the customer's order
     //this setup assumes that the customer doesn't want duplicates of any veggies
     //in the salad (i.e. a double-order of lettuce)
+
     public CustomDict[] veggiesIncluded = new CustomDict[6] {
         new CustomDict("Chopped Lettuce", false),
-        new CustomDict("Chopped Carrots", false),
-        new CustomDict("Chopped Tomatoes", false),
-        new CustomDict("Chopped Onions", false),
+        new CustomDict("Chopped Carrot", false),
+        new CustomDict("Chopped Tomato", false),
+        new CustomDict("Chopped Onion", false),
         new CustomDict("Chopped Chicken", false),
         new CustomDict("Chopped Bacon", false),
     };
+
 }
