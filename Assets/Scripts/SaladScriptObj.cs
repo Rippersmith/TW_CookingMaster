@@ -13,20 +13,32 @@ using UnityEngine;
     [System.Serializable]
 public struct CustomDict
 {
-    public string veggieName;
-    public bool isVeggieIncluded;
+    private string veggieName;
+    private bool isVeggieIncluded;
+
+    public string VeggieName { get { return veggieName; } set { veggieName = value; } }
+    public bool IsVeggieIncluded { get { return isVeggieIncluded; } set { isVeggieIncluded = value; } }
 
     public CustomDict(string _veggieName, bool _isVeggieIncluded)
     {
         veggieName = _veggieName;
         isVeggieIncluded = _isVeggieIncluded;
     }
+
+    public void AddVeggieToSalad()
+    {
+        isVeggieIncluded = true;
+        
+    }
+
 }
 [CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/Salads", order = 2)]
-public class SaladList: VegetablesScriptObj
+public class SaladScriptObj: VegetablesScriptObj
 {
     //this array of CustomDicts will be checked against a similar list
     //of the customer's order
+    //this setup assumes that the customer doesn't want duplicates of any veggies
+    //in the salad (i.e. a double-order of lettuce)
     public CustomDict[] veggiesIncluded = new CustomDict[6] {
         new CustomDict("Chopped Lettuce", false),
         new CustomDict("Chopped Carrots", false),
@@ -35,6 +47,4 @@ public class SaladList: VegetablesScriptObj
         new CustomDict("Chopped Chicken", false),
         new CustomDict("Chopped Bacon", false),
     };
-
-    public Dictionary<string, bool> g = new Dictionary<string, bool>();
 }

@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ceded91d2707364d9f0b0dd64aec0e6, type: 3}
   m_Name: Salad
   m_EditorClassIdentifier: 
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 4e8073c752cbe7441923af4af5798d17, type: 3}
   veggieName: 
+  veggiesIncluded: []

@@ -67,7 +67,6 @@ public class PlayersScript : MonoBehaviour
         //the interactableObject's tag - 
         if (Input.GetButtonDown(interact) && sensorInfo.interactBool == true && timeLeft)
         {
-            print(sensorInfo.interactableObject.tag);
             if (sensorInfo.interactableObject.tag == "VeggiePiles")
             {
                 GetNewVegetable(sensorInfo.interactableObject.GetComponent<VegetablePiles>().veggie);
@@ -75,6 +74,10 @@ public class PlayersScript : MonoBehaviour
             else if (sensorInfo.interactableObject.tag == "TrashCan" && playerInfo.veggieQueue.Count > 0)
             {
                 ThrowOutItem();
+            }
+            if (sensorInfo.interactableObject.tag == "ChoppingBoard" && sensorInfo.interactableObject.GetComponent<ChoppingBoard>().isSaladHere == true && playerInfo.veggieQueue.Count > 0)
+            {
+                PickUpNewSalad(sensorInfo.interactableObject.GetComponent<ChoppingBoard>());
             }
             else if (sensorInfo.interactableObject.tag == "Customer" && playerInfo.veggieQueue.Count > 0)
             {
@@ -88,7 +91,7 @@ public class PlayersScript : MonoBehaviour
         {
             if (sensorInfo.interactableObject.tag == "ChoppingBoard" && playerInfo.veggieQueue.Count > 0)
             {
-                ThrowOutItem();
+                PutVegetableOnChoppingBoard(sensorInfo.interactableObject.GetComponent<ChoppingBoard>());
             }
             //PutVegetableOnChoppingBoard();
             //TODO: implement chop script
@@ -131,10 +134,20 @@ public class PlayersScript : MonoBehaviour
 
     //function to put a veggie on the chopping board, currently only checks to
     //make sure a veggie can be dequeued
-    void PutVegetableOnChoppingBoard()
+    void PutVegetableOnChoppingBoard(ChoppingBoard board)
     {
+        transform.position = board.newPlayerPos.position;
+        //if (board.newCombo == null)
+        //    board.newCombo = (SaladScriptObj)TakeVeggieFromQueue();
+        //else
+            board.StartChopping("Chopped " + TakeVeggieFromQueue().veggieName);
 
-        //gameManager.TakeVeggieFromQueue(playerNum);
+    }
+
+    void PickUpNewSalad(ChoppingBoard board)
+    {
+        playerInfo.veggieQueue.Enqueue(board.TakeSalad());
+        //print(playerInfo.veggieQueue.veggiesIncluded)
     }
 
     void ThrowOutItem()
