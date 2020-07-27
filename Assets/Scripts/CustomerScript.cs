@@ -56,7 +56,7 @@ public class CustomerScript : MonoBehaviour
 
         orderText.text = string.Format("{0}, {1}", newOrder.veggiesIncluded[firstOrder].VeggieName, newOrder.veggiesIncluded[secondOrder].VeggieName);
 
-        newOrder.DisplayVeggiesIncluded();
+        //newOrder.DisplayVeggiesIncluded();
 
         return newOrder;
     }
@@ -75,6 +75,7 @@ public class CustomerScript : MonoBehaviour
             SpawnPowerup(player);
         }
 
+        timeMultiplier = 1f;
          order = GenerateNewOrder();
             
     }

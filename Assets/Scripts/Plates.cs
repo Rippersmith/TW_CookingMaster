@@ -5,20 +5,22 @@ using UnityEngine;
 public class Plates : MonoBehaviour
 {
     public SaladScriptObj item;
-    // Start is called before the first frame update
-    void Start()
+    public SpriteRenderer pic;
+
+    //assign new SaladScriptObj to the plate
+    public void Assign(SaladScriptObj obj)
     {
-        
+        item = obj;
+        pic.color = Color.white;
+        pic.sprite = obj.icon;
     }
 
-    // Update is called once per frame
-    void Update()
+    //take the SaladScriptObj from the plate
+    public SaladScriptObj DisplayObject()
     {
-        
-    }
-
-    public void DisplayObject()
-    {
-
+        SaladScriptObj temp = item;
+        item = null;
+        pic.color = Color.clear;
+        return temp;
     }
 }

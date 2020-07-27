@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4760990574400331062}
   - component: {fileID: 4760990574400331063}
   - component: {fileID: 4760990574400331061}
+  - component: {fileID: 2550423984594164914}
   m_Layer: 0
   m_Name: Shoe
   m_TagString: Untagged
@@ -94,3 +95,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e17e98267382c054fb013088457b5b38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerScript: {fileID: 0}
+--- !u!58 &2550423984594164914
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4760990574400331080}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 1.0666667

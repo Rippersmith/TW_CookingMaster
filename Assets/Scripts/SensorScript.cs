@@ -14,7 +14,7 @@ public class SensorScript : MonoBehaviour
         //few if statements
     private void OnTriggerStay2D(Collider2D collider)
     {
-        if (collider.CompareTag("VeggiePiles") || collider.CompareTag("TrashCan") || collider.CompareTag("ChoppingBoard") || collider.CompareTag("Customer"))
+        if (collider.CompareTag("VeggiePiles") || collider.CompareTag("TrashCan") || collider.CompareTag("ChoppingBoard") || collider.CompareTag("Customer") || collider.CompareTag("Plate"))
         {
             interactBool = true;
             interactableObject = collider.gameObject;
@@ -25,7 +25,7 @@ public class SensorScript : MonoBehaviour
     //once he moves out of range of the object
     private void OnTriggerExit2D(Collider2D collider)
     {
-        if (collider.CompareTag("VeggiePiles") || collider.CompareTag("TrashCan") || collider.CompareTag("ChoppingBoard") || collider.CompareTag("Customer"))
+        if (collider.CompareTag("VeggiePiles") || collider.CompareTag("TrashCan") || collider.CompareTag("ChoppingBoard") || collider.CompareTag("Customer") || collider.CompareTag("Plate"))
         {
             interactBool = false;
             interactableObject = null;

@@ -91,6 +91,18 @@ public class PlayersScript : MonoBehaviour
             {
                 CheckCustomerOrder(playerInfo.veggieQueue.Peek(), sensorInfo.interactableObject.GetComponent<CustomerScript>());
             }
+            else if (sensorInfo.interactableObject.tag == "Plate")
+            {
+                if (sensorInfo.interactableObject.GetComponent<Plates>().item == null && playerInfo.veggieQueue.Count > 0)
+                {
+                    sensorInfo.interactableObject.GetComponent<Plates>().Assign(TakeItemFromQueue());
+                }
+                else if (sensorInfo.interactableObject.GetComponent<Plates>().item != null && playerInfo.veggieQueue.Count < 2)
+                {
+                    GetNewVegetable(sensorInfo.interactableObject.GetComponent<Plates>().DisplayObject());
+                }
+                    
+            }
         }
 
         //Input for Chop
@@ -110,7 +122,8 @@ public class PlayersScript : MonoBehaviour
         //Player movement
         //TODO: Try and make player movement a little smoother; try and use something with Lerp & velocity
         //as of now, the player will just move through solid objects
-        rb.MovePosition(rb.position + (movement * movementSpeed * Time.fixedDeltaTime));
+        //rb.MovePosition(rb.position + (movement * movementSpeed * Time.fixedDeltaTime));
+        rb.velocity = movement * movementSpeed * Time.fixedDeltaTime;
 
     }
 
@@ -125,6 +138,16 @@ public class PlayersScript : MonoBehaviour
         if (playerInfo.veggieQueue.Count < 2)
         {
             playerInfo.veggieQueue.Enqueue(NewSaladFromVeggie(newVeggie));
+            playerInfo.UpdateQueue();
+        }
+    }
+
+    //function to "pick up" a veggie from a vegetable pile
+    void GetNewVegetable(SaladScriptObj plateVeggie)
+    {
+        if (playerInfo.veggieQueue.Count < 2)
+        {
+            playerInfo.veggieQueue.Enqueue(plateVeggie);
             playerInfo.UpdateQueue();
         }
     }
