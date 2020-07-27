@@ -26,8 +26,12 @@ public class ChoppingBoard : MonoBehaviour
     public void StartChopping(string addToCombo)
     {
         isSaladHere = true;
+
+        //if there isn't a salad aready on the board, make a new one
         if (newCombo == null)
             newCombo = saladToSpawn;
+
+        //otherwise, add to the one that's already there
         for (int i = 0; i < newCombo.veggiesIncluded.Length; i++)
         {
             if (newCombo.veggiesIncluded[i].VeggieName == addToCombo)

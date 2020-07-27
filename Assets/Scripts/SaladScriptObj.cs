@@ -10,7 +10,6 @@ using UnityEngine;
     //I want to make a Dictionary where I can assign variables without Start()/Awake(),
     //(no MonoBehaviour available) but Dictionary doesn't allow that. Instead, I made
     //my own customized Dictionary (shortened to CustomDict) that can be assigned automatically
-//[System.Serializable]
 public struct CustomDict
 {
     private string veggieName;
@@ -49,5 +48,16 @@ public class SaladScriptObj: VegetablesScriptObj
         new CustomDict("Chopped Chicken", false),
         new CustomDict("Chopped Bacon", false),
     };
+
+    //this is for debugging purposes, so I can see what's in the veggiesIncluded
+    //when I need to
+    public void DisplayVeggiesIncluded()
+    {
+        Debug.Log(veggieName + " ; " + icon);
+        for (int i = 0; i < 6; i++)
+        {
+            Debug.Log(veggiesIncluded[i].VeggieName + " : " + veggiesIncluded[i].IsVeggieIncluded);
+        }
+    }
 
 }

@@ -7,6 +7,7 @@ TagManager:
   - VeggiePiles
   - ChoppingBoard
   - TrashCan
+  - Customer
   layers:
   - Default
   - TransparentFX

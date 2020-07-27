@@ -19,7 +19,7 @@ public class PlayersScript : MonoBehaviour
     //front of something important (vegetables, customer, trash)
     public GameObject sensor;
     SensorScript sensorInfo;
-
+    Material playerMaterial;
     bool timeLeft = true;
 
     public void SetTimeLeft(bool isTimeLeft)
@@ -37,6 +37,8 @@ public class PlayersScript : MonoBehaviour
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>().GetGameManager();
         rb = GetComponent<Rigidbody2D>();
         sensorInfo = sensor.GetComponent<SensorScript>();
+        playerMaterial = GetComponent<SpriteRenderer>().material;
+        playerMaterial.SetVector("_Color", playerInfo.playerColor);
     }
 
     void Update()
@@ -79,11 +81,10 @@ public class PlayersScript : MonoBehaviour
             {
                 PickUpNewSalad(sensorInfo.interactableObject.GetComponent<ChoppingBoard>());
             }
-            else if (sensorInfo.interactableObject.tag == "Customer" && playerInfo.veggieQueue.Count > 0)
+            else if (sensorInfo.interactableObject.tag == "Customer" && playerInfo.veggieQueue.Count > 0 && playerInfo.veggieQueue.Peek().veggieName == "Salad")
             {
-                //TODO: implement Customer interactions
+                CheckCustomerOrder(playerInfo.veggieQueue.Peek(), sensorInfo.interactableObject.GetComponent<CustomerScript>());
             }
-            //Interact();
         }
 
         //Input for Chop
@@ -107,6 +108,11 @@ public class PlayersScript : MonoBehaviour
 
     }
 
+    public void SetShaderColor()
+    {
+        //Call GameManager & Set shader color here. Need this color for painting power-ups as well
+    }
+
     //function to "pick up" a veggie from a vegetable pile
     void GetNewVegetable(VegetablesScriptObj newVeggie)
     {
@@ -119,11 +125,11 @@ public class PlayersScript : MonoBehaviour
 
     //take a veggie out from the player's queue and put it somewhere, & update the queue
     //Ambiguous so that it can be used in almost any situation that will be available
-    VegetablesScriptObj TakeItemFromQueue()
+    SaladScriptObj TakeItemFromQueue()
     {
         if (playerInfo.veggieQueue.Count > 0)
         {
-            VegetablesScriptObj tempItem = playerInfo.veggieQueue.Dequeue();
+            SaladScriptObj tempItem = playerInfo.veggieQueue.Dequeue();
             playerInfo.UpdateQueue();
 
             return tempItem;
@@ -147,10 +153,7 @@ public class PlayersScript : MonoBehaviour
 
         //Debugging to check the values of the SaladScriptObj just picked up
         //SaladScriptObj veg = playerInfo.veggieQueue.Peek();
-        //for (int i = 0; i < 6; i++)
-        //{
-        //    print(veg.veggiesIncluded[i].VeggieName + " : " + veg.veggiesIncluded[i].IsVeggieIncluded);
-        //}
+        //veg.DisplayVeggiesIncluded();
     }
 
     //function to use when player throws out a veggie or salad into the trash can
@@ -165,13 +168,40 @@ public class PlayersScript : MonoBehaviour
             playerInfo.score = 0;
     }
 
+    //function that tests the customer order vs what the player has. If it's wrong,
+    //the customwer will get mad, otherwise the salad is taken out of the queue and
+    //the player gets 200 points
+    void CheckCustomerOrder(SaladScriptObj playerSalad, CustomerScript customer)
+    {
+        SaladScriptObj custOrder = customer.order;
+
+        if (playerSalad == custOrder)
+        {
+            TakeItemFromQueue();
+            playerInfo.score += 200;          
+        }
+        else
+        {
+            customer.CustomerGetsAngry();
+        }
+    }
+
     //this is a conversion function to transfer the values in VegetablesScriptObj
     //into a new, instantiated SaladScriptObj
     SaladScriptObj NewSaladFromVeggie(VegetablesScriptObj veggie)
     {
         SaladScriptObj newSalad = ScriptableObject.CreateInstance<SaladScriptObj>();
         newSalad.icon = veggie.icon;
-        newSalad.veggieName = veggie.veggieName;
+        newSalad.veggieName = "Salad";
         return newSalad;
+    }
+
+    //will temporarily double the speed of the player
+    public IEnumerator TempSpeedUp()
+    {
+        float origSpeed = movementSpeed;
+        movementSpeed *= 1.5f;
+        yield return new WaitForSeconds(10f);
+        movementSpeed = origSpeed;
     }
 }

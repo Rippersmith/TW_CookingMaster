@@ -12,6 +12,7 @@ public class PlayerInfo : MonoBehaviour
     public float time;
     public int score;
     public Queue<SaladScriptObj> veggieQueue = new Queue<SaladScriptObj>();
+    public Color playerColor;
 
     //obvoiously, this will be a problem since maxHeldItems could change at any time,
     //but for now, as long as there's only 2 player, I'll keep it set like this
@@ -37,8 +38,6 @@ public class PlayerInfo : MonoBehaviour
 
     public void UpdateQueue()
     {
-        //if (veggieQueue.Peek() != null)
-           
         for (int i = 0; i < maxHeldItems; i++){
             //show the image of the veggie if there is one (or two)
             //Note: this enqueue-dequeue way is meant to read the veggie,
