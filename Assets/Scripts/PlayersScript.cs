@@ -27,6 +27,9 @@ public class PlayersScript : MonoBehaviour
         timeLeft = isTimeLeft;
     }
 
+
+    //in hindsight, each PlayersScript is pretty much each player's GameManager,
+    //so a real GameManager wasn't too necessary
     GameManager gameManager;
 
     Vector2 movement = new Vector2(0, 0);
@@ -39,10 +42,13 @@ public class PlayersScript : MonoBehaviour
         sensorInfo = sensor.GetComponent<SensorScript>();
         playerMaterial = GetComponent<SpriteRenderer>().material;
         playerMaterial.SetVector("_Color", playerInfo.playerColor);
+
     }
 
     void Update()
     {
+
+        //stop moving if the player runs out of time
         if (playerInfo.time <= 0)
         {
             timeLeft = false;
@@ -108,9 +114,9 @@ public class PlayersScript : MonoBehaviour
 
     }
 
-    public void SetShaderColor()
+    public Color GetMaterialColor()
     {
-        //Call GameManager & Set shader color here. Need this color for painting power-ups as well
+        return playerMaterial.GetVector("_Color");
     }
 
     //function to "pick up" a veggie from a vegetable pile
@@ -178,7 +184,9 @@ public class PlayersScript : MonoBehaviour
         if (playerSalad == custOrder)
         {
             TakeItemFromQueue();
-            playerInfo.score += 200;          
+            playerInfo.score += 200;
+            customer.OrderDelivered(this);
+
         }
         else
         {

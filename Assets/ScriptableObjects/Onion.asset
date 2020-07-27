@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cc3800c2bcd243a4993e4f41259b9c00, type: 3}
-  m_Name: ChoppedCarrots
+  m_Name: Onion
   m_EditorClassIdentifier: 
-  icon: {fileID: 21300000, guid: 4e8073c752cbe7441923af4af5798d17, type: 3}
-  veggieName: Chopped Carrot
+  icon: {fileID: 21300000, guid: 827583a27ed62d749aecab529ae2f2f1, type: 3}
+  veggieName: Onion

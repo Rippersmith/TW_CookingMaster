@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PointsPower : MonoBehaviour
+public class Plates : MonoBehaviour
 {
+    public SaladScriptObj item;
     // Start is called before the first frame update
     void Start()
     {
@@ -14,5 +15,10 @@ public class PointsPower : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void DisplayObject()
+    {
+
     }
 }
